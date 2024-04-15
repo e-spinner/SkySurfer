@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_game"
+        android:title="@string/title_game"
+        android:icon="@drawable/game_competition_svgrepo_com"/>
+
+
+    <item
+        android:id="@+id/navigation_stats"
+        android:title="@string/title_stats"
+        android:icon="@drawable/stats1_svgrepo_com"/>
+
+    <item
+        android:id="@+id/navigation_settings"
+        android:title="@string/title_settings"
+        android:icon="@drawable/settings_svgrepo_com"/>
+</menu>
+

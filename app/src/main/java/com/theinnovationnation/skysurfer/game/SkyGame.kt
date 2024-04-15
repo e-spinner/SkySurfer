@@ -3,6 +3,7 @@ package com.theinnovationnation.skysurfer.game
 import android.graphics.*
 import kotlin.random.Random
 
+// NUMBER OF WALLS ON SCREEN
 const val NUM_WALLS = 20
 
 class SkyGame(private val surfaceWidth: Int, private val surfaceHeight: Int) {

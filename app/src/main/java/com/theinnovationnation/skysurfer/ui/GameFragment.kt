@@ -10,24 +10,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.theinnovationnation.skysurfer.R
 import com.theinnovationnation.skysurfer.game.SkyView
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-
-
 
 class GameFragment : Fragment(), SensorEventListener {
 
     private lateinit var sensorManager: SensorManager
     private var accelerometer: Sensor? = null
     private lateinit var surfaceView: SkyView
+    private lateinit var heightDisplay: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Corrected SensorManager initialization
+
         sensorManager = requireContext().getSystemService(Context.SENSOR_SERVICE) as SensorManager
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
     }
@@ -66,6 +63,8 @@ class GameFragment : Fragment(), SensorEventListener {
 
         // Now that the view is inflated, you can find views within it
         surfaceView = view.findViewById(R.id.sky_surface)
+        heightDisplay = view.findViewById(R.id.height_display)
+        surfaceView.setTextView(heightDisplay)
 
         // For testing in the emulator
         surfaceView.setOnClickListener { surfaceView.shake() }

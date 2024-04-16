@@ -2,8 +2,9 @@ package com.theinnovationnation.skysurfer.game
 
 import android.view.SurfaceHolder
 import android.graphics.PointF
+import android.widget.TextView
 
-class SkyThread (private val surfaceHolder: SurfaceHolder) : Thread() {
+class SkyThread (private val surfaceHolder: SurfaceHolder, hDisp: TextView) : Thread() {
 
     private var skyGame: SkyGame
     private var threadRunning = false
@@ -13,7 +14,7 @@ class SkyThread (private val surfaceHolder: SurfaceHolder) : Thread() {
         threadRunning = true
 
         val canvas = surfaceHolder.lockCanvas()
-        skyGame = SkyGame(canvas.width, canvas.height)
+        skyGame = SkyGame(canvas.width, canvas.height, hDisp)
         surfaceHolder.unlockCanvasAndPost(canvas)
     }
 

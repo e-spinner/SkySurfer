@@ -1,15 +1,18 @@
 package com.theinnovationnation.skysurfer.game
 
 import android.graphics.*
+import android.widget.TextView
 import kotlin.random.Random
 
 // NUMBER OF BIRDS ON SCREEN
 const val NUM_BIRDS = 15
 
-class SkyGame(private val surfaceWidth: Int, private val surfaceHeight: Int) {
+class SkyGame(private val surfaceWidth: Int, private val surfaceHeight: Int, val hDisp: TextView) {
 
     private val surfer = Surfer(surfaceWidth, surfaceHeight)
     private val birdList = mutableListOf<Bird>()
+
+    private var surferHeight = 0;
 
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private var gameOver = false
@@ -51,7 +54,8 @@ class SkyGame(private val surfaceWidth: Int, private val surfaceHeight: Int) {
 
         // Move surfer and walls
         surfer.move(velocity, birdList)
-
+        surferHeight -= surfer.surferSpeed
+        hDisp.text = "$surferHeight m"
 
         val birdY = if (surfer.isAtThreshold) -surfer.surferSpeed else 0
 

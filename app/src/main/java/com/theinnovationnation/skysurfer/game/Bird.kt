@@ -42,10 +42,12 @@ class Bird(var x: Int, var y: Int, initialDirectionRight: Boolean,
         rect.offsetTo(x, rect.top)
     }
 
-    fun move() {
+    fun move( dy: Int ) {
+
+        y += dy
 
         // Move wall right or left
-        rect.offset(moveDistance, 0)
+        rect.offset(moveDistance, dy)
 
         // Bounce wall off surface edges
         if (rect.right > surfaceWidth) {

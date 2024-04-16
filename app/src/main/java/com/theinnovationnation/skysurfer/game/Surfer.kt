@@ -1,14 +1,23 @@
 package com.theinnovationnation.skysurfer.game
 
 import android.graphics.*
+import java.security.KeyStore.TrustedCertificateEntry
 
 const val SURFER_RADIUS = 20
 const val SURFER_COLOR = 0xffaaaaff
+const val HEIGHT_THRESHOLD = 0.45
 
 class Surfer (private val surfaceWidth: Int, private val surfaceHeight: Int) {
 
+    // flag to track it the surfer is at threshold value
+    public var isAtThreshold = false
+
+    public var surferSpeed = 0
+
     private var paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private var center = Point(SURFER_RADIUS, SURFER_RADIUS)
+
+
 
     private val jumpPath = generateJumpPath(surfaceHeight)
     private var jumpIndex = 0 // Index to track the current position in the jump path
@@ -34,10 +43,9 @@ class Surfer (private val surfaceWidth: Int, private val surfaceHeight: Int) {
 
 
         val steps = mutableListOf<Int>()
-        for (i in 20..60 step 2) {
+        for (i in 10..160 step 3) {
             val stepHeight = maxHeight / i
             steps.add(stepHeight)
-            println(steps)
         }
         jumpPath.add(0)
         jumpPath.addAll(steps.map { it * -1 })
@@ -68,11 +76,20 @@ class Surfer (private val surfaceWidth: Int, private val surfaceHeight: Int) {
         if (jumpIndex > jumpPath.size-1 ) {
             jumpIndex = jumpPath.size-1
         }
-        val jumpY = jumpPath[jumpIndex]
+        var jumpY = jumpPath[jumpIndex]
 
         isFalling = jumpY > 0
+        surferSpeed = jumpY
 
-        // Apply the jumping effect to the Y position
+
+        // Check if surfer has reached threshold height
+        if ( center.y <= HEIGHT_THRESHOLD * surfaceHeight && !isFalling ) {
+            isAtThreshold = true
+            jumpY = 0
+        }
+        else { isAtThreshold = false }
+
+        // Apply the Y movement
         center.offset(0, jumpY)
 
         jumpIndex++

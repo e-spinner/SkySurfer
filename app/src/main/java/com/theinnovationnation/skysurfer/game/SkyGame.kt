@@ -3,8 +3,8 @@ package com.theinnovationnation.skysurfer.game
 import android.graphics.*
 import kotlin.random.Random
 
-// NUMBER OF WALLS ON SCREEN
-const val NUM_WALLS = 20
+// NUMBER OF BIRDS ON SCREEN
+const val NUM_BIRDS = 15
 
 class SkyGame(private val surfaceWidth: Int, private val surfaceHeight: Int) {
 
@@ -18,14 +18,14 @@ class SkyGame(private val surfaceWidth: Int, private val surfaceHeight: Int) {
         paint.textSize = 90f
         paint.color = Color.RED
 
-        val wallY = surfaceHeight / (NUM_WALLS + 1)
+        val birdY = surfaceHeight / (NUM_BIRDS + 1)
 
         // Add walls at random locations, and alternate initial direction
-        for (c in 1..NUM_WALLS) {
+        for (c in 1..NUM_BIRDS) {
             val initialRight = c % 2 == 0
             birdList.add(
                 Bird(
-                    Random.nextInt(surfaceWidth), wallY * c, initialRight,
+                    Random.nextInt(surfaceWidth), birdY * c, initialRight,
                     surfaceWidth, surfaceHeight
                 )
             )
@@ -38,11 +38,11 @@ class SkyGame(private val surfaceWidth: Int, private val surfaceHeight: Int) {
         gameOver = false
 
         // Reset surfer at the top of the screen
-        surfer.setCenter(surfaceWidth / 2, surfaceHeight - SURFER_RADIUS + 100)
+        surfer.setCenter(surfaceWidth / 2, 600)
 
         // Reset walls at random spots
-        for (wall in birdList) {
-            wall.relocate(Random.nextInt(surfaceWidth))
+        for (bird in birdList) {
+            bird.relocate(Random.nextInt(surfaceWidth))
         }
     }
 
@@ -51,15 +51,28 @@ class SkyGame(private val surfaceWidth: Int, private val surfaceHeight: Int) {
 
         // Move surfer and walls
         surfer.move(velocity, birdList)
+
+
+        val birdY = if (surfer.isAtThreshold) -surfer.surferSpeed else 0
+
         for (bird in birdList) {
-            bird.move()
+            bird.move(birdY)
+
+            // Check if bird is below screen
+            println(bird.y)
+            if (bird.y > surfaceHeight) {
+                bird.relocate(Random.nextInt(surfaceWidth))
+                bird.y = 0
+                bird.rect.offsetTo(bird.rect.left, 0)
+
+            }
         }
 
 
 
         // Check for win
         if (surfer.bottom >= surfaceHeight) {
-            gameOver = false
+            gameOver = true
         }
     }
 
@@ -70,8 +83,8 @@ class SkyGame(private val surfaceWidth: Int, private val surfaceHeight: Int) {
 
         // Draw surfer and walls
         surfer.draw(canvas)
-        for (wall in birdList) {
-            wall.draw(canvas)
+        for (bird in birdList) {
+            bird.draw(canvas)
         }
 
     }

@@ -4,17 +4,38 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Rect
 import kotlin.math.min
+import kotlin.random.Random
 
 const val BIRD_SPEED = 5
-const val BIRD_COLOR = -0x5501
+
+enum class BirdType(val color: Long) {
+    EVIL_BIRD(0xFF402b4c),
+    SHY_BIRD(0xFFe6f3ea),
+    BOUNCE_BIRD(0xFFffe555),
+    FAST_BIRD(0xFFf92227),
+    SLOW_BIRD(0xFF18206b)
+}
+
+public fun randomBird(): BirdType {
+
+    when(Random.nextInt(0, 10)) {
+        1, 2, 3 -> return BirdType.SLOW_BIRD
+        4, 5, 6 -> return  BirdType.FAST_BIRD
+        7, 8 -> return BirdType.SHY_BIRD
+        9 -> return BirdType.BOUNCE_BIRD
+        0 -> return BirdType.EVIL_BIRD
+    }
+    return BirdType.BOUNCE_BIRD
+}
 
 // It looks like a bird, but it is not a bird because it's in your phone
 class Bird(var x: Int, var y: Int, initialDirectionRight: Boolean,
-           private var surfaceWidth: Int, surfaceHeight: Int) {
+           private var surfaceWidth: Int, surfaceHeight: Int, var birdType: BirdType) {
 
     var rect: Rect
     private var moveDistance = 0
-    private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
+    val paint = Paint(Paint.ANTI_ALIAS_FLAG)
+    public var isVisible = true
 
     init {
         // Determine wall dimensions based on surface width and height
@@ -32,7 +53,7 @@ class Bird(var x: Int, var y: Int, initialDirectionRight: Boolean,
         moveDistance = if (initialDirectionRight) BIRD_SPEED else -BIRD_SPEED
 
         // Wall color
-        paint.color = BIRD_COLOR
+        paint.color = birdType.color.toInt()
     }
 
     fun relocate(xDistance: Int) {
@@ -47,7 +68,7 @@ class Bird(var x: Int, var y: Int, initialDirectionRight: Boolean,
         y += dy
 
         // Move wall right or left
-        rect.offset(moveDistance, dy)
+        rect.offset(moveDistance * speedMod(birdType), dy)
 
         // Bounce wall off surface edges
         if (rect.right > surfaceWidth) {
@@ -59,7 +80,16 @@ class Bird(var x: Int, var y: Int, initialDirectionRight: Boolean,
         }
     }
 
+    private fun speedMod(birdType: BirdType) : Int {
+        return when (birdType) {
+            BirdType.FAST_BIRD -> 2
+            BirdType.SLOW_BIRD -> 1
+            else -> 0
+        }
+    }
+
     fun draw(canvas: Canvas) {
+        if (!isVisible) paint.color = 0x0
         canvas.drawRect(rect, paint)
     }
 }

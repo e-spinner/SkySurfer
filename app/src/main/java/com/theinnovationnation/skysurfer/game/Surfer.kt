@@ -43,7 +43,7 @@ class Surfer (private val surfaceWidth: Int, private val surfaceHeight: Int) {
 
 
         val steps = mutableListOf<Int>()
-        for (i in 10..160 step 3) {
+        for (i in 10..120 step 2) {
             val stepHeight = maxHeight / i
             steps.add(stepHeight)
         }
@@ -60,15 +60,23 @@ class Surfer (private val surfaceWidth: Int, private val surfaceHeight: Int) {
     }
 
     private var isFalling: Boolean = false
+    private var boost: Float = 1.0F
 
     fun move(velocity: PointF, birdList: MutableList<Bird>) {
         // Move surfer's center by velocity in the X direction
         center.offset(-velocity.x.toInt() * 6 , 0)
 
+
         // Check for collision with birds or ground
         for (bird in birdList) {
             if (this.intersects(bird, isFalling) || this.bottom >= surfaceHeight) {
                 jumpIndex = 1
+                when (bird.birdType) {
+                    BirdType.SHY_BIRD -> bird.isVisible = false
+                    BirdType.EVIL_BIRD -> jumpIndex = jumpPath.size-1
+                    BirdType.BOUNCE_BIRD -> boost = 5.0F
+                    else -> {}
+                }
             }
         }
 
@@ -79,7 +87,8 @@ class Surfer (private val surfaceWidth: Int, private val surfaceHeight: Int) {
         var jumpY = jumpPath[jumpIndex]
 
         isFalling = jumpY > 0
-        surferSpeed = jumpY
+        if(isFalling) boost = 1.0F
+        surferSpeed = (jumpY * boost).toInt()
 
 
         // Check if surfer has reached threshold height

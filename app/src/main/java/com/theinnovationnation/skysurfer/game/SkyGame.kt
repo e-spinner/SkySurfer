@@ -5,14 +5,16 @@ import android.widget.TextView
 import kotlin.random.Random
 
 // NUMBER OF BIRDS ON SCREEN
-const val NUM_BIRDS = 15
+const val NUM_BIRDS = 12
+
+
 
 class SkyGame(private val surfaceWidth: Int, private val surfaceHeight: Int, val hDisp: TextView) {
 
     private val surfer = Surfer(surfaceWidth, surfaceHeight)
     private val birdList = mutableListOf<Bird>()
 
-    private var surferHeight = 0;
+    private var surferHeight = 0
 
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private var gameOver = false
@@ -23,19 +25,20 @@ class SkyGame(private val surfaceWidth: Int, private val surfaceHeight: Int, val
 
         val birdY = surfaceHeight / (NUM_BIRDS + 1)
 
-        // Add walls at random locations, and alternate initial direction
+        // Add birds at random locations, and alternate initial direction
         for (c in 1..NUM_BIRDS) {
             val initialRight = c % 2 == 0
             birdList.add(
                 Bird(
                     Random.nextInt(surfaceWidth), birdY * c, initialRight,
-                    surfaceWidth, surfaceHeight
+                    surfaceWidth, surfaceHeight, randomBird()
                 )
             )
         }
 
         newGame()
     }
+
 
     fun newGame() {
         gameOver = false
@@ -65,6 +68,10 @@ class SkyGame(private val surfaceWidth: Int, private val surfaceHeight: Int, val
             // Check if bird is below screen
             println(bird.y)
             if (bird.y > surfaceHeight) {
+                val newBirdType = randomBird()
+                bird.paint.color = newBirdType.color.toInt() // Update the bird's color
+                bird.birdType = newBirdType
+                bird.isVisible = true
                 bird.relocate(Random.nextInt(surfaceWidth))
                 bird.y = 0
                 bird.rect.offsetTo(bird.rect.left, 0)

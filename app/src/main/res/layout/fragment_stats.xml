@@ -13,5 +13,65 @@
         android:layout_margin="20dp"
         android:text="Stats Fragment" />
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="17dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="High Score: "
+        android:layout_marginLeft="15dp"
+        android:textSize="20sp"/>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="17dp" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Total Attempts: "
+        android:layout_marginLeft="15dp"
+        android:textSize="20sp"/>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="17dp" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Jumps Made: "
+        android:layout_marginLeft="15dp"
+        android:textSize="20sp"/>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="17dp" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Platforms Landed On: "
+        android:layout_marginLeft="15dp"
+        android:textSize="20sp"/>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="17dp" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Leaderboard: "
+        android:layout_marginLeft="15dp"
+        android:textSize="20sp"/>
+
 
 </LinearLayout>

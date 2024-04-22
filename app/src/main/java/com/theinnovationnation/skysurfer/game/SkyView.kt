@@ -21,7 +21,7 @@ class SkyView (context: Context, attrs: AttributeSet) :
     }
 
     override fun surfaceCreated(holder: SurfaceHolder) {
-        skyThread = SkyThread(holder, hDisp)
+        skyThread = com.theinnovationnation.skysurfer.game.SkyThread(holder, hDisp)
         skyThread?.start()
     }
 

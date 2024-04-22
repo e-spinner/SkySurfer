@@ -4,12 +4,14 @@ import android.graphics.*
 import android.widget.TextView
 import kotlin.random.Random
 
-// NUMBER OF BIRDS ON SCREEN
-const val NUM_BIRDS = 12
+
 
 
 
 class SkyGame(private val surfaceWidth: Int, private val surfaceHeight: Int, val hDisp: TextView) {
+
+    // NUMBER OF BIRDS ON SCREEN
+    private val numBirds = 12
 
     private val surfer = Surfer(surfaceWidth, surfaceHeight)
     private val birdList = mutableListOf<Bird>()
@@ -23,10 +25,10 @@ class SkyGame(private val surfaceWidth: Int, private val surfaceHeight: Int, val
         paint.textSize = 90f
         paint.color = Color.RED
 
-        val birdY = surfaceHeight / (NUM_BIRDS + 1)
+        val birdY = surfaceHeight / (numBirds + 1)
 
         // Add birds at random locations, and alternate initial direction
-        for (c in 1..NUM_BIRDS) {
+        for (c in 1..numBirds) {
             val initialRight = c % 2 == 0
             birdList.add(
                 Bird(
@@ -45,6 +47,11 @@ class SkyGame(private val surfaceWidth: Int, private val surfaceHeight: Int, val
 
         // Reset surfer at the top of the screen
         surfer.setCenter(surfaceWidth / 2, 600)
+
+        // Reset Score
+        surferHeight = 0
+
+        surfer.jumpIndex = 0
 
         // Reset walls at random spots
         for (bird in birdList) {
@@ -66,7 +73,6 @@ class SkyGame(private val surfaceWidth: Int, private val surfaceHeight: Int, val
             bird.move(birdY)
 
             // Check if bird is below screen
-            println(bird.y)
             if (bird.y > surfaceHeight) {
                 val newBirdType = randomBird()
                 bird.paint.color = newBirdType.color.toInt() // Update the bird's color

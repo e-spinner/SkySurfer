@@ -6,7 +6,7 @@ import android.graphics.Rect
 import kotlin.math.min
 import kotlin.random.Random
 
-const val BIRD_SPEED = 5
+
 
 enum class BirdType(val color: Long) {
     EVIL_BIRD(0xFF402b4c),
@@ -16,21 +16,23 @@ enum class BirdType(val color: Long) {
     SLOW_BIRD(0xFF18206b)
 }
 
-public fun randomBird(): BirdType {
+fun randomBird(): BirdType {
 
-    when(Random.nextInt(0, 10)) {
-        1, 2, 3 -> return BirdType.SLOW_BIRD
-        4, 5, 6 -> return  BirdType.FAST_BIRD
-        7, 8 -> return BirdType.SHY_BIRD
-        9 -> return BirdType.BOUNCE_BIRD
-        0 -> return BirdType.EVIL_BIRD
+    return when(Random.nextInt(0, 10)) {
+        1, 2, 3 -> BirdType.SLOW_BIRD
+        4, 5, 6 -> BirdType.FAST_BIRD
+        7, 8 -> BirdType.SHY_BIRD
+        9 -> BirdType.BOUNCE_BIRD
+        else -> BirdType.EVIL_BIRD
     }
-    return BirdType.BOUNCE_BIRD
+
 }
 
 // It looks like a bird, but it is not a bird because it's in your phone
 class Bird(var x: Int, var y: Int, initialDirectionRight: Boolean,
            private var surfaceWidth: Int, surfaceHeight: Int, var birdType: BirdType) {
+
+    private val birdSpeed = 5
 
     var rect: Rect
     private var moveDistance = 0
@@ -50,7 +52,7 @@ class Bird(var x: Int, var y: Int, initialDirectionRight: Boolean,
         rect = Rect(x, y, x + width, y + height)
 
         // Determine how many pixels walls move each iteration
-        moveDistance = if (initialDirectionRight) BIRD_SPEED else -BIRD_SPEED
+        moveDistance = if (initialDirectionRight) birdSpeed else -birdSpeed
 
         // Wall color
         paint.color = birdType.color.toInt()

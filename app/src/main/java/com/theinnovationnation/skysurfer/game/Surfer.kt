@@ -1,13 +1,13 @@
 package com.theinnovationnation.skysurfer.game
 
 import android.graphics.*
-import java.security.KeyStore.TrustedCertificateEntry
 
-const val SURFER_RADIUS = 20
-const val SURFER_COLOR = 0xffaaaaff
-const val HEIGHT_THRESHOLD = 0.45
 
 class Surfer (private val surfaceWidth: Int, private val surfaceHeight: Int) {
+
+    private val surferRadius = 20
+    private val surferColor = 0xffaaaaff
+    private val heightThreshold = 0.45
 
     // flag to track it the surfer is at threshold value
     public var isAtThreshold = false
@@ -15,18 +15,18 @@ class Surfer (private val surfaceWidth: Int, private val surfaceHeight: Int) {
     public var surferSpeed = 0
 
     private var paint = Paint(Paint.ANTI_ALIAS_FLAG)
-    private var center = Point(SURFER_RADIUS, SURFER_RADIUS)
+    private var center = Point(surferRadius, surferRadius)
 
 
 
     private val jumpPath = generateJumpPath(surfaceHeight)
-    private var jumpIndex = 0 // Index to track the current position in the jump path
+    var jumpIndex = 0 // Index to track the current position in the jump path
 
     val bottom
-        get() = center.y + SURFER_RADIUS
+        get() = center.y + surferRadius
 
     init {
-        paint.color = SURFER_COLOR.toInt()
+        paint.color = surferColor.toInt()
     }
 
     fun setCenter(x: Int, y: Int) {
@@ -92,7 +92,7 @@ class Surfer (private val surfaceWidth: Int, private val surfaceHeight: Int) {
 
 
         // Check if surfer has reached threshold height
-        if ( center.y <= HEIGHT_THRESHOLD * surfaceHeight && !isFalling ) {
+        if ( center.y <= heightThreshold * surfaceHeight && !isFalling ) {
             isAtThreshold = true
             jumpY = 0
         }
@@ -106,33 +106,33 @@ class Surfer (private val surfaceWidth: Int, private val surfaceHeight: Int) {
 
 
         // Don't go too far down or up
-        if (center.y > surfaceHeight - SURFER_RADIUS) {
-            center.y = surfaceHeight - SURFER_RADIUS
-        } else if (center.y < SURFER_RADIUS) {
-            center.y = SURFER_RADIUS
+        if (center.y > surfaceHeight - surferRadius) {
+            center.y = surfaceHeight - surferRadius
+        } else if (center.y < surferRadius) {
+            center.y = surferRadius
         }
 
         // Don't go too far right or left
-        if (center.x > surfaceWidth - SURFER_RADIUS) {
-            center.x = surfaceWidth - SURFER_RADIUS
-        } else if (center.x < SURFER_RADIUS) {
-            center.x = SURFER_RADIUS
+        if (center.x > surfaceWidth - surferRadius) {
+            center.x = surfaceWidth - surferRadius
+        } else if (center.x < surferRadius) {
+            center.x = surferRadius
         }
     }
 
 
     fun draw(canvas: Canvas) {
-        canvas.drawCircle(center.x.toFloat(), center.y.toFloat(), SURFER_RADIUS.toFloat(), paint)
+        canvas.drawCircle(center.x.toFloat(), center.y.toFloat(), surferRadius.toFloat(), paint)
     }
 
     private fun intersects(bird: Bird, isFalling: Boolean): Boolean {
 
         // Check if the bottom of the surfer's bounding box intersects with the top of the bird's bounding box
         // and if the surfer's bounding box intersects with the bird's bounding box on the x-axis
-        if (    center.y + SURFER_RADIUS >= bird.rect.top &&
-                center.y - SURFER_RADIUS <= bird.rect.bottom &&
-                center.x + SURFER_RADIUS >= bird.rect.left &&
-                center.x - SURFER_RADIUS <= bird.rect.right ) {
+        if (    center.y + surferRadius >= bird.rect.top &&
+                center.y - surferRadius <= bird.rect.bottom &&
+                center.x + surferRadius >= bird.rect.left &&
+                center.x - surferRadius <= bird.rect.right ) {
             if (isFalling) {
                 return true
             }

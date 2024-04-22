@@ -77,7 +77,7 @@ class GameFragment : Fragment(), SensorEventListener {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance() =
-            GameFragment().apply {
+            com.theinnovationnation.skysurfer.ui.GameFragment().apply {
 
             }
     }

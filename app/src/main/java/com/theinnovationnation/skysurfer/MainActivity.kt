@@ -1,6 +1,7 @@
 package com.theinnovationnation.skysurfer
 
 import android.os.Bundle
+import android.widget.TextView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment

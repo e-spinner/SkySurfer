@@ -1,12 +1,15 @@
 package com.theinnovationnation.skysurfer.ui
 
+import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.theinnovationnation.skysurfer.R
-
+import android.widget.TextView
+import android.content.SharedPreferences
+import com.theinnovationnation.skysurfer.game.SkyView
 
 
 /**
@@ -16,10 +19,53 @@ import com.theinnovationnation.skysurfer.R
  */
 class StatsFragment : Fragment() {
 
+    private lateinit var highScore: TextView
+    private lateinit var attemptsMade: TextView
+    private lateinit var jumpsMade: TextView
+    private lateinit var platformsLanded: TextView
+
+
+    /**
+     * saveStats - Function to be used to save stats to the shared preferences to be called laters
+     * @param highScore - High Score value to be saved
+     * @param attemptsMade - # of attempts made to be saved
+     * @param jumpsMade - # of jumps made to be saved
+     * @param platformsLanded - # of platforms landed on to be saved
+     * @return void - Will return once finished saving stats
+     */
+    fun saveStats(highScore: Int, attemptsMade: Int, jumpsMade: Int, platformsLanded: Int){
+        val sharedPref = activity?.getSharedPreferences("myStats", Context.MODE_PRIVATE) ?: return
+        with (sharedPref.edit()) {
+            // Saving data to XML file using parameters passed to function
+            putInt(getString(R.string.high_score), highScore)
+            putInt(getString(R.string.attempts_made), attemptsMade)
+            putInt(getString(R.string.jumps_made), jumpsMade)
+            putInt(getString(R.string.platforms_landed), platformsLanded)
+            apply()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // retrieving values from shared preferences XML file
+        val sharedPref = activity?.getSharedPreferences("myStats", Context.MODE_PRIVATE)
+        val highScoreVal = sharedPref?.getInt(getString(R.string.high_score), 0)
+        val attemptsMadeVal = sharedPref?.getInt(getString(R.string.attempts_made), 0)
+        val platformsLandedVal = sharedPref?.getInt(getString(R.string.platforms_landed), 0)
+        val jumpsMadeVal = sharedPref?.getInt(getString(R.string.jumps_made), 0)
+
+        // Making String Variables to update textview since it was yelling at me to
+        val highScoreText = "High Score: " + highScoreVal
+        val attemptsMadeText = "Attempts Made: " + attemptsMadeVal
+        val jumpsMadeText = "Jumps Made: " + jumpsMadeVal
+        val platformsLandedText  = "Platforms Landed On: " + platformsLandedVal
+
+        // Updates TextViews to hold correct Stats
+        highScore.setText(highScoreText)
+        attemptsMade.setText(attemptsMadeText)
+        platformsLanded.setText(platformsLandedText)
+        jumpsMade.setText(jumpsMadeText)
     }
 
     override fun onCreateView(
@@ -27,7 +73,15 @@ class StatsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_stats, container, false)
+        val view = inflater.inflate(R.layout.fragment_stats, container, false)
+
+        // Now that the view is inflated, you can find views within it
+        highScore = view.findViewById(R.id.highScore)
+        attemptsMade = view.findViewById(R.id.attemptsMade)
+        jumpsMade = view.findViewById(R.id.jumpsMade)
+        platformsLanded = view.findViewById(R.id.platformsLanded)
+
+        return view
     }
 
     companion object {

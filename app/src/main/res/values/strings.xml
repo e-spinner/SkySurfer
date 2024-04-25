@@ -5,4 +5,10 @@
     <string name="title_settings">Settings</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Strings for Key-Value Pairs to save stats -->
+    <string name="high_score">HighScore</string>
+    <string name="platforms_landed">PlatformsLanded</string>
+    <string name="jumps_made">JumpsMade</string>
+    <string name="attempts_made">AttemptsMade</string>
 </resources>

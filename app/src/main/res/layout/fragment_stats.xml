@@ -18,7 +18,7 @@
         android:layout_height="17dp" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/highScore"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="High Score: "
@@ -30,7 +30,7 @@
         android:layout_height="17dp" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/attemptsMade"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Total Attempts: "
@@ -42,7 +42,7 @@
         android:layout_height="17dp" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/jumpsMade"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Jumps Made: "
@@ -54,7 +54,7 @@
         android:layout_height="17dp" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/platformsLanded"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Platforms Landed On: "
@@ -66,7 +66,7 @@
         android:layout_height="17dp" />
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/leaderboard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Leaderboard: "

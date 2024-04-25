@@ -47,6 +47,20 @@ class StatsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        val view = inflater.inflate(R.layout.fragment_stats, container, false)
+
+        // Now that the view is inflated, you can find views within it
+        highScore = view.findViewById(R.id.highScore)
+        attemptsMade = view.findViewById(R.id.attemptsMade)
+        jumpsMade = view.findViewById(R.id.jumpsMade)
+        platformsLanded = view.findViewById(R.id.platformsLanded)
 
         // retrieving values from shared preferences XML file
         val sharedPref = activity?.getSharedPreferences("myStats", Context.MODE_PRIVATE)
@@ -66,20 +80,6 @@ class StatsFragment : Fragment() {
         attemptsMade.setText(attemptsMadeText)
         platformsLanded.setText(platformsLandedText)
         jumpsMade.setText(jumpsMadeText)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_stats, container, false)
-
-        // Now that the view is inflated, you can find views within it
-        highScore = view.findViewById(R.id.highScore)
-        attemptsMade = view.findViewById(R.id.attemptsMade)
-        jumpsMade = view.findViewById(R.id.jumpsMade)
-        platformsLanded = view.findViewById(R.id.platformsLanded)
 
         return view
     }

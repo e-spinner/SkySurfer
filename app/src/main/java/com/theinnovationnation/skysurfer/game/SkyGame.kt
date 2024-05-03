@@ -5,28 +5,50 @@ import android.widget.TextView
 import kotlin.random.Random
 
 
+class SkyGame() {
 
+    private var onGameOverListener: OnGameOverListener? = null
+    private lateinit var hDisp: TextView
+    private var surfaceHeight: Int = 0
+    private var surfaceWidth: Int = 0
 
+    fun setCanvasSize( canvas: Canvas) {
+        this.surfaceHeight = canvas.height
+        this.surfaceWidth = canvas.width
+    }
 
-class SkyGame(private val surfaceWidth: Int, private val surfaceHeight: Int, val hDisp: TextView) {
+    fun setTextView( textView: TextView) {
+        hDisp = textView
+    }
+
+    fun setOnGameOverListener(listener: OnGameOverListener) {
+        this.onGameOverListener = listener
+    }
+
 
     // NUMBER OF BIRDS ON SCREEN
     private val numBirds = 12
 
-    private val surfer = Surfer(surfaceWidth, surfaceHeight)
-    private val birdList = mutableListOf<Bird>()
+
+
+    private lateinit var surfer: Surfer
+    private var birdList = mutableListOf<Bird>()
 
     private var surferHeight = 0
 
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private var gameOver = false
 
-    init {
+    fun initialize() {
+
+        surfer = Surfer(surfaceWidth, surfaceHeight)
+
         paint.textSize = 90f
         paint.color = Color.RED
 
         val birdY = surfaceHeight / (numBirds + 1)
 
+        birdList = mutableListOf<Bird>()
         // Add birds at random locations, and alternate initial direction
         for (c in 1..numBirds) {
             val initialRight = c % 2 == 0
@@ -65,7 +87,8 @@ class SkyGame(private val surfaceWidth: Int, private val surfaceHeight: Int, val
         // Move surfer and walls
         surfer.move(velocity, birdList)
         surferHeight -= surfer.surferSpeed
-        hDisp.text = "$surferHeight m"
+        val text = "$surferHeight m"
+        hDisp.text = text
 
         val birdY = if (surfer.isAtThreshold) -surfer.surferSpeed else 0
 
@@ -87,9 +110,12 @@ class SkyGame(private val surfaceWidth: Int, private val surfaceHeight: Int, val
 
 
 
-        // Check for win
+        // Check for lose
         if (surfer.bottom >= surfaceHeight) {
             gameOver = true
+            // save stats
+            println("game over")
+            onGameOverListener?.onGameOver(arrayOf( surferHeight, 1, surfer.platformsLandedOn+1, surfer.platformsLandedOn ))
         }
     }
 

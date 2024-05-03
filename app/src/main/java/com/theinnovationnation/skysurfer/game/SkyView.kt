@@ -10,18 +10,21 @@ class SkyView (context: Context, attrs: AttributeSet) :
     SurfaceView(context, attrs), SurfaceHolder.Callback {
 
     private var skyThread: SkyThread? = null
-    private lateinit var hDisp: TextView
+    private lateinit var skyGame: SkyGame
+    private lateinit var surfaceHolder: SurfaceHolder
 
     init {
         holder.addCallback(this)
     }
 
-    fun setTextView(textView: TextView) {
-        hDisp = textView
+    fun setSkyGame(skyGame: SkyGame) {
+        println("SkyView setSkyGame, skyGame: $skyGame")
+        this.skyGame = skyGame
     }
 
     override fun surfaceCreated(holder: SurfaceHolder) {
-        skyThread = com.theinnovationnation.skysurfer.game.SkyThread(holder, hDisp)
+        this.surfaceHolder = holder
+        skyThread = SkyThread(holder, skyGame)
         skyThread?.start()
     }
 

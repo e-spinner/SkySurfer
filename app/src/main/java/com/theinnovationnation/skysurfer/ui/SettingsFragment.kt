@@ -11,6 +11,7 @@ import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.theinnovationnation.skysurfer.R
+import com.theinnovationnation.skysurfer.game.SkyGame
 
 
 class SettingsFragment : Fragment() {

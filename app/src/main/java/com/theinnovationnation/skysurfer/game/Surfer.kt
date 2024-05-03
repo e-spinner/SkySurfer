@@ -9,6 +9,8 @@ class Surfer (private val surfaceWidth: Int, private val surfaceHeight: Int) {
     private val surferColor = 0xffaaaaff
     private val heightThreshold = 0.45
 
+    var platformsLandedOn = 0
+
     // flag to track it the surfer is at threshold value
     public var isAtThreshold = false
 
@@ -16,8 +18,6 @@ class Surfer (private val surfaceWidth: Int, private val surfaceHeight: Int) {
 
     private var paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private var center = Point(surferRadius, surferRadius)
-
-
 
     private val jumpPath = generateJumpPath(surfaceHeight)
     var jumpIndex = 0 // Index to track the current position in the jump path
@@ -71,6 +71,10 @@ class Surfer (private val surfaceWidth: Int, private val surfaceHeight: Int) {
         for (bird in birdList) {
             if (this.intersects(bird, isFalling) || this.bottom >= surfaceHeight) {
                 jumpIndex = 1
+                platformsLandedOn++
+                println("platforms: $platformsLandedOn")
+
+
                 when (bird.birdType) {
                     BirdType.SHY_BIRD -> bird.isVisible = false
                     BirdType.EVIL_BIRD -> jumpIndex = jumpPath.size-1

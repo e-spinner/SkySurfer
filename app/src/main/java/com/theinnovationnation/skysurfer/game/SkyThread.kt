@@ -2,19 +2,22 @@ package com.theinnovationnation.skysurfer.game
 
 import android.view.SurfaceHolder
 import android.graphics.PointF
-import android.widget.TextView
 
-class SkyThread (private val surfaceHolder: SurfaceHolder, hDisp: TextView) : Thread() {
 
-    private var skyGame: SkyGame
+class SkyThread (private val surfaceHolder: SurfaceHolder, private var skyGame: SkyGame) : Thread() {
+
     private var threadRunning = false
     private val velocity = PointF()
 
     init {
         threadRunning = true
+        println("skythread init")
 
         val canvas = surfaceHolder.lockCanvas()
-        skyGame = SkyGame(canvas.width, canvas.height, hDisp)
+
+        println("skythread: canvas: ${canvas.height}, ${canvas.width}")
+        skyGame.setCanvasSize(canvas)
+        skyGame.initialize()
         surfaceHolder.unlockCanvasAndPost(canvas)
     }
 

@@ -17,33 +17,13 @@ import com.theinnovationnation.skysurfer.game.SkyView
  * Use the [StatsFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class StatsFragment : Fragment() {
+class StatsFragment : Fragment(){
 
     private lateinit var highScore: TextView
     private lateinit var attemptsMade: TextView
     private lateinit var jumpsMade: TextView
     private lateinit var platformsLanded: TextView
 
-
-    /**
-     * saveStats - Function to be used to save stats to the shared preferences to be called laters
-     * @param highScore - High Score value to be saved
-     * @param attemptsMade - # of attempts made to be saved
-     * @param jumpsMade - # of jumps made to be saved
-     * @param platformsLanded - # of platforms landed on to be saved
-     * @return void - Will return once finished saving stats
-     */
-    fun saveStats(highScore: Int, attemptsMade: Int, jumpsMade: Int, platformsLanded: Int){
-        val sharedPref = activity?.getSharedPreferences("myStats", Context.MODE_PRIVATE) ?: return
-        with (sharedPref.edit()) {
-            // Saving data to XML file using parameters passed to function
-            putInt(getString(R.string.high_score), highScore)
-            putInt(getString(R.string.attempts_made), attemptsMade)
-            putInt(getString(R.string.jumps_made), jumpsMade)
-            putInt(getString(R.string.platforms_landed), platformsLanded)
-            apply()
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +33,7 @@ class StatsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        println("statsFragment onCreateView")
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_stats, container, false)
 

@@ -54,6 +54,20 @@ class SettingsFragment : Fragment() {
                         }
                     }, 100) // Delay of 100 milliseconds
                 }
+                R.id.button -> {
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                        val sharedPref = activity?.getSharedPreferences("myStats", Context.MODE_PRIVATE)
+                        with (sharedPref?.edit()) {
+                            this?.putInt(getString(R.string.high_score), 0)
+                            this?.putInt(getString(R.string.attempts_made), 0)
+                            this?.putInt(getString(R.string.jumps_made), 0 )
+                            this?.putInt(getString(R.string.platforms_landed), 0)
+                            this?.apply()
+                        }
+
+                    }, 100) // Delay of 100 milliseconds
+                }
             }
         }
 

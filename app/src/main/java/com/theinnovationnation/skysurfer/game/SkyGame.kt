@@ -1,7 +1,12 @@
 package com.theinnovationnation.skysurfer.game
 
+import android.content.res.ColorStateList
 import android.graphics.*
+import android.graphics.drawable.Drawable
 import android.widget.TextView
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.graphics.drawable.DrawableCompat
+import com.theinnovationnation.skysurfer.R
 import kotlin.random.Random
 
 
@@ -11,6 +16,7 @@ class SkyGame() {
     private lateinit var hDisp: TextView
     private var surfaceHeight: Int = 0
     private var surfaceWidth: Int = 0
+    private lateinit var svgDrawable: Drawable
 
     fun setCanvasSize( canvas: Canvas) {
         this.surfaceHeight = canvas.height
@@ -19,6 +25,10 @@ class SkyGame() {
 
     fun setTextView( textView: TextView) {
         hDisp = textView
+    }
+
+    fun setDrawable ( drawable: Drawable ) {
+        svgDrawable = drawable
     }
 
     fun setOnGameOverListener(listener: OnGameOverListener) {
@@ -55,7 +65,7 @@ class SkyGame() {
             birdList.add(
                 Bird(
                     Random.nextInt(surfaceWidth), birdY * c, initialRight,
-                    surfaceWidth, surfaceHeight, randomBird()
+                    surfaceWidth, surfaceHeight, randomBird(), svgDrawable
                 )
             )
         }
@@ -99,7 +109,9 @@ class SkyGame() {
             if (bird.y > surfaceHeight) {
                 val newBirdType = randomBird()
                 println(theme)
-                bird.paint.color = if ( theme == "lightMode" ) newBirdType.lightTheme.toInt() else newBirdType.darkTheme.toInt()// Update the bird's color
+                val color = if ( theme == "lightMode" ) newBirdType.lightTheme.toInt() else newBirdType.darkTheme.toInt()
+                bird.paint.color = color// Update the bird's color
+                DrawableCompat.setTintList(bird.svgBird, ColorStateList.valueOf(color))
                 bird.birdType = newBirdType
                 bird.isVisible = true
                 bird.relocate(Random.nextInt(surfaceWidth))

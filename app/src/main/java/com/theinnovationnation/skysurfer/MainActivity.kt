@@ -1,9 +1,10 @@
 package com.theinnovationnation.skysurfer
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.widget.TextView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
 import com.theinnovationnation.skysurfer.game.SkyGame
 import com.theinnovationnation.skysurfer.ui.GameFragment
@@ -23,7 +24,8 @@ class MainActivity : AppCompatActivity() {
 
 
         println("Main Activity onCreate skygame: $skyGame")
-
+        val svgDrawable = AppCompatResources.getDrawable(this, R.drawable.settings_svgrepo_com) as Drawable
+        skyGame.setDrawable(svgDrawable)
         // Initialize fragments after skyGame is initialized
         initializeFragments()
 

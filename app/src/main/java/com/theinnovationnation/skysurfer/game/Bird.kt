@@ -16,9 +16,9 @@ fun isLightThemeSelected(themeValue: Long): Boolean {
 enum class BirdType(val lightTheme: Long, val darkTheme: Long) {
     EVIL_BIRD(0xFF402B4C, 0xFFB2A4D4),
     SHY_BIRD(0x48CCFF, 0x3A3A3E),
-    BOUNCE_BIRD(0xFFffd555, 0xFFffd555),
-    FAST_BIRD(0xFFf92227, 0xFFf92227),
-    SLOW_BIRD(0xFF18206b, 0xFF18206b)
+    BOUNCE_BIRD(0xFFffd555, 0xFFFFFFFF),
+    FAST_BIRD(0xFFf92227, 0xFFFFFFFF),
+    SLOW_BIRD(0xFF18206b, 0xFFFFFFFF)
 }
 
 fun randomBird(): BirdType {
@@ -61,7 +61,7 @@ class Bird(var x: Int, var y: Int, initialDirectionRight: Boolean,
 
         // Wall color
 
-        paint.color = if (true) birdType.lightTheme.toInt() else birdType.darkTheme.toInt()
+        paint.color = birdType.lightTheme.toInt()
     }
 
     fun relocate(xDistance: Int) {

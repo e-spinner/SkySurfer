@@ -13,14 +13,5 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
 
 
-        <!-- Customize your theme here. -->
-        <item name="gameBackgroundColor">@color/day_background</item>
-        <item name="evilBirdColor">@color/evil_bird_light</item>
-        <item name="shyBirdColor">@color/shy_bird_light</item>
-        <item name="bounceBirdColor">@color/bounce_bird_light</item>
-        <item name="fastBirdColor">@color/fast_bird_light</item>
-        <item name="slowBirdColor">@color/slow_bird_light</item>
-
-
     </style>
 </resources>

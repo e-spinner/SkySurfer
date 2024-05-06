@@ -15,6 +15,7 @@ import com.theinnovationnation.skysurfer.R
 import com.theinnovationnation.skysurfer.game.OnGameOverListener
 import com.theinnovationnation.skysurfer.game.SkyGame
 import com.theinnovationnation.skysurfer.game.SkyView
+import kotlin.properties.Delegates
 
 class GameFragment(private var skyGame: SkyGame? = null) : Fragment(), SensorEventListener, OnGameOverListener {
 
@@ -60,10 +61,15 @@ class GameFragment(private var skyGame: SkyGame? = null) : Fragment(), SensorEve
     private var accelerometer: Sensor? = null
     private lateinit var surfaceView: SkyView
     private lateinit var heightDisplay: TextView
+    private var theme: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         println("GameFragment onCreate skygame: $skyGame")
+
+        val sharedPref = activity?.getSharedPreferences("theme", Context.MODE_PRIVATE)
+        theme = sharedPref?.getString("theme", "lightTheme").toString()
+        skyGame?.theme = theme
 
         sensorManager = requireContext().getSystemService(Context.SENSOR_SERVICE) as SensorManager
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
@@ -72,6 +78,11 @@ class GameFragment(private var skyGame: SkyGame? = null) : Fragment(), SensorEve
 
     override fun onResume() {
         super.onResume()
+
+        val sharedPref = activity?.getSharedPreferences("theme", Context.MODE_PRIVATE)
+        theme = sharedPref?.getString("theme", "lightTheme").toString()
+        skyGame?.theme = theme
+
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL)
     }
 

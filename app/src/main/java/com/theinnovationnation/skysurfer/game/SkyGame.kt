@@ -6,7 +6,7 @@ import kotlin.random.Random
 
 
 class SkyGame() {
-
+    var theme: String = ""
     private var onGameOverListener: OnGameOverListener? = null
     private lateinit var hDisp: TextView
     private var surfaceHeight: Int = 0
@@ -98,7 +98,8 @@ class SkyGame() {
             // Check if bird is below screen
             if (bird.y > surfaceHeight) {
                 val newBirdType = randomBird()
-                bird.paint.color = newBirdType.color.toInt() // Update the bird's color
+                println(theme)
+                bird.paint.color = if ( theme == "lightMode" ) newBirdType.lightTheme.toInt() else newBirdType.darkTheme.toInt()// Update the bird's color
                 bird.birdType = newBirdType
                 bird.isVisible = true
                 bird.relocate(Random.nextInt(surfaceWidth))
@@ -122,7 +123,8 @@ class SkyGame() {
     fun draw(canvas: Canvas) {
 
         // Wipe canvas clean
-        canvas.drawColor(Color.WHITE)
+        val color = if ( theme == "lightMode" ) Color.parseColor("#FF48CCDB") else Color.parseColor("#FF36393E")
+        canvas.drawColor( color )
 
         // Draw surfer and walls
         surfer.draw(canvas)

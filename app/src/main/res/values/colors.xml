@@ -5,6 +5,30 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="white">#FF000000</color>
+    <color name="black">#FFFFFFFF</color>
+
+    <!--  Theme background  -->
+    <color name="day_background">#48CCDB</color>
+    <color name="night_background">#36393E</color>
+
+    <!--  Evil Bird Color  -->
+    <color name="evil_bird_light">#FF402B4C</color>
+    <color name="evil_bird_dark">#FFB2A4D4</color>
+
+    <!--  Shy Bird Color  -->
+    <color name="shy_bird_light">#48CCFF</color>
+    <color name="shy_bird_dark">#3A3A3E</color>
+
+    <!--  Bounce Bird Color  -->
+    <color name="bounce_bird_light">#FFffd555</color>
+    <color name="bounce_bird_dark">#FFffd555</color>
+
+    <!--  Fast Bird Color  -->
+    <color name="fast_bird_light">#FFf92227</color>
+    <color name="fast_bird_dark">#FFf92227</color>
+
+    <!--  Slow Bird Color  -->
+    <color name="slow_bird_light">#FF18206b</color>
+    <color name="slow_bird_dark">#FF18206b</color>
 </resources>

@@ -1,5 +1,6 @@
 package com.theinnovationnation.skysurfer.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -36,11 +37,21 @@ class SettingsFragment : Fragment() {
                 R.id.LightMode -> {
                     Handler(Looper.getMainLooper()).postDelayed({
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                        val sharedPref = activity?.getSharedPreferences("theme", Context.MODE_PRIVATE)
+                        with(sharedPref!!.edit()) {
+                            putString("theme" , "lightMode")
+                            apply()
+                        }
                     }, 100) // Delay of 100 milliseconds
                 }
                 R.id.DarkMode -> {
                     Handler(Looper.getMainLooper()).postDelayed({
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                        val sharedPref = activity?.getSharedPreferences("theme", Context.MODE_PRIVATE)
+                        with(sharedPref!!.edit()) {
+                            putString("theme" , "darkMode")
+                            apply()
+                        }
                     }, 100) // Delay of 100 milliseconds
                 }
             }

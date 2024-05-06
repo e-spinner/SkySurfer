@@ -1,19 +1,24 @@
 package com.theinnovationnation.skysurfer.game
 
+import android.app.Application
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Rect
 import kotlin.math.min
 import kotlin.random.Random
 
+fun isLightThemeSelected(themeValue: Long): Boolean {
+    return BirdType.values().any { it.lightTheme == themeValue }
+}
 
-
-enum class BirdType(val color: Long) {
-    EVIL_BIRD(0xFF402b4c),
-    SHY_BIRD(0xFFe6f3ea),
-    BOUNCE_BIRD(0xFFffe555),
-    FAST_BIRD(0xFFf92227),
-    SLOW_BIRD(0xFF18206b)
+// true = Day
+// false = Night
+enum class BirdType(val lightTheme: Long, val darkTheme: Long) {
+    EVIL_BIRD(0xFF402B4C, 0xFFB2A4D4),
+    SHY_BIRD(0x48CCFF, 0x3A3A3E),
+    BOUNCE_BIRD(0xFFffd555, 0xFFffd555),
+    FAST_BIRD(0xFFf92227, 0xFFf92227),
+    SLOW_BIRD(0xFF18206b, 0xFF18206b)
 }
 
 fun randomBird(): BirdType {
@@ -55,7 +60,8 @@ class Bird(var x: Int, var y: Int, initialDirectionRight: Boolean,
         moveDistance = if (initialDirectionRight) birdSpeed else -birdSpeed
 
         // Wall color
-        paint.color = birdType.color.toInt()
+
+        paint.color = if (true) birdType.lightTheme.toInt() else birdType.darkTheme.toInt()
     }
 
     fun relocate(xDistance: Int) {

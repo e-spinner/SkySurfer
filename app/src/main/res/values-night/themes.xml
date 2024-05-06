@@ -11,6 +11,14 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+
+
         <!-- Customize your theme here. -->
+        <item name="gameBackgroundColor">@color/night_background</item>
+        <item name="evilBirdColor">@color/evil_bird_dark</item>
+        <item name="shyBirdColor">@color/shy_bird_dark</item>
+        <item name="bounceBirdColor">@color/bounce_bird_dark</item>
+        <item name="fastBirdColor">@color/fast_bird_dark</item>
+        <item name="slowBirdColor">@color/slow_bird_dark</item>
     </style>
 </resources>

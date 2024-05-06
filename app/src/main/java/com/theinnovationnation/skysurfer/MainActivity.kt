@@ -10,7 +10,6 @@ import com.theinnovationnation.skysurfer.ui.GameFragment
 import com.theinnovationnation.skysurfer.ui.SettingsFragment
 import com.theinnovationnation.skysurfer.ui.StatsFragment
 
-
 class MainActivity : AppCompatActivity() {
     private  var skyGame = SkyGame()
 

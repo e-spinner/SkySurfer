@@ -1,15 +1,26 @@
 package com.theinnovationnation.skysurfer.game
 
 import android.graphics.*
+import android.graphics.drawable.Drawable
 
 
-class Surfer (private val surfaceWidth: Int, private val surfaceHeight: Int) {
+class Surfer(
+    private val surfaceWidth: Int,
+    private val surfaceHeight: Int,
+    surferDrawable: Drawable
+) {
 
-    private val surferRadius = 20
+    private val svgSurfer = surferDrawable.copy()
+    private val surferRadius = 60
     private val surferColor = 0xffaaaaff
     private val heightThreshold = 0.45
 
     var platformsLandedOn = 0
+    var totalShy = 0
+    var totalEvil = 0
+    var totalFast = 0
+    var totalSlow = 0
+    var totalBounce = 0
 
     // flag to track it the surfer is at threshold value
     public var isAtThreshold = false
@@ -72,6 +83,15 @@ class Surfer (private val surfaceWidth: Int, private val surfaceHeight: Int) {
             if (this.intersects(bird, isFalling) || this.bottom >= surfaceHeight) {
                 jumpIndex = 1
                 platformsLandedOn++
+
+                when (bird.birdType) {
+                    BirdType.SHY_BIRD -> totalShy++
+                    BirdType.EVIL_BIRD -> totalEvil++
+                    BirdType.BOUNCE_BIRD -> totalBounce++
+                    BirdType.FAST_BIRD -> totalFast++
+                    BirdType.SLOW_BIRD -> totalSlow++
+                }
+
                 println("platforms: $platformsLandedOn")
 
 
@@ -126,7 +146,19 @@ class Surfer (private val surfaceWidth: Int, private val surfaceHeight: Int) {
 
 
     fun draw(canvas: Canvas) {
-        canvas.drawCircle(center.x.toFloat(), center.y.toFloat(), surferRadius.toFloat(), paint)
+        // Set the bounds of the SVG drawable to match the circle's diameter
+        svgSurfer.bounds = Rect(
+            center.x.toInt() - surferRadius.toInt(), // left
+            center.y.toInt() - surferRadius.toInt(), // top
+            center.x.toInt() + surferRadius.toInt(), // right
+            center.y.toInt() + surferRadius.toInt() // bottom
+        )
+
+        // Draw the circle
+        //canvas.drawCircle(center.x.toFloat(), center.y.toFloat(), surferRadius.toFloat(), paint)
+
+        // Draw the SVG drawable
+        svgSurfer.draw(canvas)
     }
 
     private fun intersects(bird: Bird, isFalling: Boolean): Boolean {

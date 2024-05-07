@@ -4,9 +4,7 @@ import android.content.res.ColorStateList
 import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.widget.TextView
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.DrawableCompat
-import com.theinnovationnation.skysurfer.R
 import kotlin.random.Random
 
 
@@ -17,7 +15,8 @@ class SkyGame() {
     private lateinit var hDisp: TextView
     private var surfaceHeight: Int = 0
     private var surfaceWidth: Int = 0
-    private lateinit var svgDrawable: Drawable
+    private lateinit var birdDrawable: Drawable
+    private lateinit var surferDrawable: Drawable
 
     fun setCanvasSize( canvas: Canvas) {
         this.surfaceHeight = canvas.height
@@ -28,8 +27,9 @@ class SkyGame() {
         hDisp = textView
     }
 
-    fun setDrawable ( drawable: Drawable ) {
-        svgDrawable = drawable
+    fun setDrawable ( drawable: Drawable, drawable2: Drawable ) {
+        birdDrawable = drawable
+        surferDrawable = drawable2
     }
 
     fun setOnGameOverListener(listener: OnGameOverListener) {
@@ -51,13 +51,12 @@ class SkyGame() {
 
     fun initialize() {
 
+        surfer = Surfer(surfaceWidth, surfaceHeight, surferDrawable)
         numBirds = when (difficulty) {
             "Easy" -> 16
             "Medium" -> 12
             else -> 8
         }
-
-        surfer = Surfer(surfaceWidth, surfaceHeight)
 
         paint.textSize = 90f
         paint.color = Color.RED
@@ -71,7 +70,7 @@ class SkyGame() {
             birdList.add(
                 Bird(
                     Random.nextInt(surfaceWidth), birdY * c, initialRight,
-                    surfaceWidth, surfaceHeight, randomBird(), svgDrawable
+                    surfaceWidth, surfaceHeight, randomBird(), birdDrawable
                 )
             )
         }
@@ -91,8 +90,20 @@ class SkyGame() {
 
         surfer.jumpIndex = 0
 
-        // Reset walls at random spots
+
+        val birdY = surfaceHeight / (numBirds + 1)
+        for (c in 1..numBirds) {
+            birdList[c-1].y = birdY * c
+
+        }
         for (bird in birdList) {
+            val newBirdType = randomBird()
+            println(theme)
+            val color = if ( theme == "lightMode" ) newBirdType.lightTheme.toInt() else newBirdType.darkTheme.toInt()
+            bird.paint.color = color// Update the bird's color
+            DrawableCompat.setTintList(bird.svgBird, ColorStateList.valueOf(color))
+            bird.birdType = newBirdType
+            bird.isVisible = true
             bird.relocate(Random.nextInt(surfaceWidth))
         }
     }
@@ -134,7 +145,7 @@ class SkyGame() {
             gameOver = true
             // save stats
             println("game over")
-            onGameOverListener?.onGameOver(arrayOf( surferHeight, 1, surfer.platformsLandedOn+1, surfer.platformsLandedOn ))
+            onGameOverListener?.onGameOver(arrayOf( surferHeight, 1, surfer.platformsLandedOn+1, surfer.platformsLandedOn, surfer.totalSlow, surfer.totalFast, surfer.totalBounce, surfer.totalEvil, surfer.totalShy ))
         }
     }
 

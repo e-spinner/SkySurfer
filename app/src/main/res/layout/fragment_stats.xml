@@ -8,10 +8,10 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textSize="30sp"
-        android:gravity="center"
         android:layout_margin="20dp"
-        android:text="Stats Fragment" />
+        android:gravity="center"
+        android:text="Sky Surfer Stats!"
+        android:textSize="30sp" />
 
     <Space
         android:layout_width="match_parent"
@@ -66,12 +66,60 @@
         android:layout_height="17dp" />
 
     <TextView
-        android:id="@+id/leaderboard"
+        android:id="@+id/slow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Leaderboard: "
         android:layout_marginLeft="15dp"
-        android:textSize="20sp"/>
+        android:text="Total Slow Birds:"
+        android:textSize="20sp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="17dp" />
+
+    <TextView
+        android:id="@+id/fast"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:text="Total Fast Birds:"
+        android:textSize="20sp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="17dp" />
+
+    <TextView
+        android:id="@+id/bounce"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:text="Total Bounce Birds:"
+        android:textSize="20sp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="17dp" />
+
+    <TextView
+        android:id="@+id/evil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:text="Total Evil Birds:"
+        android:textSize="20sp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="17dp" />
+
+    <TextView
+        android:id="@+id/shy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:text="Total Shy Birds:"
+        android:textSize="20sp" />
 
 
 </LinearLayout>

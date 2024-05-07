@@ -24,8 +24,9 @@ class MainActivity : AppCompatActivity() {
 
 
         println("Main Activity onCreate skygame: $skyGame")
-        val svgDrawable = AppCompatResources.getDrawable(this, R.drawable.settings_svgrepo_com) as Drawable
-        skyGame.setDrawable(svgDrawable)
+        val birdDrawable = AppCompatResources.getDrawable(this, R.drawable.pretty_bird_svg) as Drawable
+        val surferDrawable = AppCompatResources.getDrawable(this, R.drawable.noun_surfer_384446) as Drawable
+        skyGame.setDrawable(birdDrawable, surferDrawable)
         // Initialize fragments after skyGame is initialized
         initializeFragments()
 

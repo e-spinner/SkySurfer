@@ -19,7 +19,7 @@ import kotlin.properties.Delegates
 
 class GameFragment(private var skyGame: SkyGame? = null) : Fragment(), SensorEventListener, OnGameOverListener {
 
-    private fun saveStats(highScore: Int, attemptsMade: Int, jumpsMade: Int, platformsLanded: Int){
+    private fun saveStats(highScore: Int, attemptsMade: Int, jumpsMade: Int, platformsLanded: Int, slow: Int, fast: Int, bounce: Int, evil: Int, shy: Int){
         println("gameFragment saveStats called")
         println("Activity: $activity")
         val sharedPref = activity?.getSharedPreferences("myStats", Context.MODE_PRIVATE) ?: return
@@ -30,6 +30,11 @@ class GameFragment(private var skyGame: SkyGame? = null) : Fragment(), SensorEve
             val attemptsMadeVal = sharedPref.getInt(getString(R.string.attempts_made), 0)
             val platformsLandedVal = sharedPref.getInt(getString(R.string.platforms_landed), 0)
             val jumpsMadeVal = sharedPref.getInt(getString(R.string.jumps_made), 0)
+            val slowVal = sharedPref.getInt("slow", 0)
+            val fastVal = sharedPref.getInt("fast", 0)
+            val bounceVal = sharedPref.getInt("bounce", 0)
+            val evilVal = sharedPref.getInt("evil", 0)
+            val shyVal = sharedPref.getInt("shy", 0)
 
             println("platforms: $platformsLanded, old platforms: $platformsLandedVal")
 
@@ -39,6 +44,11 @@ class GameFragment(private var skyGame: SkyGame? = null) : Fragment(), SensorEve
             putInt(getString(R.string.attempts_made), attemptsMade + attemptsMadeVal)
             putInt(getString(R.string.jumps_made), jumpsMade + jumpsMadeVal)
             putInt(getString(R.string.platforms_landed), platformsLanded + platformsLandedVal)
+            putInt("slow", slow + slowVal)
+            putInt("fast", fast + fastVal)
+            putInt("bounce", bounce + bounceVal)
+            putInt("evil", evil + evilVal)
+            putInt("shy", shy + shyVal)
             apply()
         }
     }
@@ -49,7 +59,7 @@ class GameFragment(private var skyGame: SkyGame? = null) : Fragment(), SensorEve
     private fun updateStats(newStats: Array<Int>) {
         stats = newStats
         println("inside updateStats")
-        saveStats(stats[0], stats[1] , stats[2] ,stats[3])
+        saveStats(stats[0], stats[1] , stats[2] ,stats[3], stats[4], stats[5] , stats[6] ,stats[7], stats[8])
     }
 
     override fun onGameOver(stats: Array<Int>) {

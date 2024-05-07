@@ -7,6 +7,7 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatDelegate
@@ -35,6 +36,9 @@ class SettingsFragment : Fragment() {
         val hardButton = view.findViewById<RadioButton>(R.id.hardButton)
 
 
+        // Find the clearData button by its ID
+        val clearDataButton = view.findViewById<Button>(R.id.clearData)
+
         // Set an OnClickListener on each RadioButton
         val onClickListener = View.OnClickListener { v ->
             when (v.id) {
@@ -58,16 +62,22 @@ class SettingsFragment : Fragment() {
                         }
                     }, 100) // Delay of 100 milliseconds
                 }
-                R.id.button -> {
+                R.id.clearData -> {
+                    println("clear data button")
                     Handler(Looper.getMainLooper()).postDelayed({
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                         val sharedPref = activity?.getSharedPreferences("myStats", Context.MODE_PRIVATE)
-                        with (sharedPref?.edit()) {
-                            this?.putInt(getString(R.string.high_score), 0)
-                            this?.putInt(getString(R.string.attempts_made), 0)
-                            this?.putInt(getString(R.string.jumps_made), 0 )
-                            this?.putInt(getString(R.string.platforms_landed), 0)
-                            this?.apply()
+                        with (sharedPref!!.edit()) {
+                            println("clear working? maybe.")
+                            this.putInt(getString(R.string.high_score), 0)
+                            this.putInt(getString(R.string.attempts_made), 0)
+                            this.putInt(getString(R.string.jumps_made), 0 )
+                            this.putInt(getString(R.string.platforms_landed), 0)
+                            this.putInt("slow", 0)
+                            this.putInt("fast", 0)
+                            this.putInt("bounce", 0)
+                            this.putInt("evil", 0)
+                            this.putInt("shy", 0)
+                            this.apply()
                         }
 
                     }, 100) // Delay of 100 milliseconds
@@ -99,6 +109,7 @@ class SettingsFragment : Fragment() {
         // Set the OnClickListener on each RadioButton
         lightModeRadioButton.setOnClickListener(onClickListener)
         darkModeRadioButton.setOnClickListener(onClickListener)
+        clearDataButton.setOnClickListener(onClickListener)
         easyButton.setOnClickListener(onClickListener)
         mediumButton.setOnClickListener(onClickListener)
         hardButton.setOnClickListener(onClickListener)

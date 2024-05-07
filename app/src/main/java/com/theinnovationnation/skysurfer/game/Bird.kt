@@ -17,7 +17,7 @@ enum class BirdType(val lightTheme: Long, val darkTheme: Long) {
     SHY_BIRD(0x48AADB, 0x686871),
     BOUNCE_BIRD(0xFFFFD555, 0xFFDAD30B),
     FAST_BIRD(0xFFf92227, 0xFFE3326D),
-    SLOW_BIRD(0xFFA634D6, 0xCB51FF)
+    SLOW_BIRD(0xFFA634D6, 0xFF000000)
 }
 
 fun randomBird(): BirdType {

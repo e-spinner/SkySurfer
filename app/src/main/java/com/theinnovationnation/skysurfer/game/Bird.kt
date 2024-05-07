@@ -4,15 +4,14 @@ import android.app.Application
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Rect
+import android.graphics.drawable.Drawable
+import android.content.res.ColorStateList
 import kotlin.math.min
+import android.graphics.drawable.VectorDrawable
+import androidx.core.graphics.drawable.DrawableCompat
 import kotlin.random.Random
 
-fun isLightThemeSelected(themeValue: Long): Boolean {
-    return BirdType.values().any { it.lightTheme == themeValue }
-}
 
-// true = Day
-// false = Night
 enum class BirdType(val lightTheme: Long, val darkTheme: Long) {
     EVIL_BIRD(0xFF48AADB, 0xFFA200ff),
     SHY_BIRD(0x48AADB, 0x686871),
@@ -33,35 +32,34 @@ fun randomBird(): BirdType {
 
 }
 
+// allows mutable copies of drawables to be made by extending Drawable
+fun Drawable.copy(): Drawable {
+    return this.constantState?.newDrawable()?.mutate()?: this
+}
+
+
 // It looks like a bird, but it is not a bird because it's in your phone
 class Bird(var x: Int, var y: Int, initialDirectionRight: Boolean,
-           private var surfaceWidth: Int, surfaceHeight: Int, var birdType: BirdType) {
+           private var surfaceWidth: Int, surfaceHeight: Int, var birdType: BirdType, private var svgDrawable: Drawable) {
 
     private val birdSpeed = 5
+    val svgBird = svgDrawable.copy()
 
     var rect: Rect
     private var moveDistance = 0
     val paint = Paint(Paint.ANTI_ALIAS_FLAG)
-    public var isVisible = true
+    var isVisible = true
 
     init {
-        // Determine wall dimensions based on surface width and height
         val width = surfaceWidth / 10
-        val height = surfaceHeight / 50
-
-        // Make sure wall fits completely on the surface
+        val height = surfaceHeight / 20
         x = min(x, surfaceWidth - width)
         y = min(y, surfaceHeight - height)
-
-        // Create wall's rectangle based on location and dimensions
         rect = Rect(x, y, x + width, y + height)
-
-        // Determine how many pixels walls move each iteration
         moveDistance = if (initialDirectionRight) birdSpeed else -birdSpeed
 
-        // Wall color
-
-        paint.color = birdType.lightTheme.toInt()
+        // Change SVG color based on birdType
+        DrawableCompat.setTintList(svgBird, ColorStateList.valueOf(birdType.lightTheme.toInt()))
     }
 
     fun relocate(xDistance: Int) {
@@ -71,14 +69,9 @@ class Bird(var x: Int, var y: Int, initialDirectionRight: Boolean,
         rect.offsetTo(x, rect.top)
     }
 
-    fun move( dy: Int ) {
-
+    fun move(dy: Int) {
         y += dy
-
-        // Move wall right or left
         rect.offset(moveDistance * speedMod(birdType), dy)
-
-        // Bounce wall off surface edges
         if (rect.right > surfaceWidth) {
             rect.offsetTo(surfaceWidth - rect.width(), rect.top)
             moveDistance *= -1
@@ -97,8 +90,13 @@ class Bird(var x: Int, var y: Int, initialDirectionRight: Boolean,
     }
 
     fun draw(canvas: Canvas) {
-        if (!isVisible) paint.color = 0x0
-        canvas.drawRect(rect, paint)
+        //if (!isVisible) paint.color = 0x0
+        //canvas.drawRect(rect, paint)
+        // Draw SVG drawable
+        svgBird.bounds = rect
+        if ( isVisible) {
+            svgBird.draw(canvas)
+        }
     }
 }
 

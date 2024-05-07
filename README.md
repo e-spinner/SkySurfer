@@ -3,9 +3,9 @@
 ## To Do
  - [x] Create basic functioning game
  - [x] Make placeholder ui
- - [ ] Create Functioning Stats
- - [ ] Create Functioning Settings
- - [ ] Allow switching between multiple themes
+ - [X] Create Functioning Stats
+ - [X] Create Functioning Settings
+ - [X] Allow switching between multiple themes
  - [ ] Replace current game assest with improved visuals
 
 

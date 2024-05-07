@@ -30,6 +30,10 @@ class SettingsFragment : Fragment() {
         // Find the RadioButtons by their IDs
         val lightModeRadioButton = view.findViewById<RadioButton>(R.id.LightMode)
         val darkModeRadioButton = view.findViewById<RadioButton>(R.id.DarkMode)
+        val easyButton = view.findViewById<RadioButton>(R.id.easyButton)
+        val mediumButton = view.findViewById<RadioButton>(R.id.mediumButton)
+        val hardButton = view.findViewById<RadioButton>(R.id.hardButton)
+
 
         // Set an OnClickListener on each RadioButton
         val onClickListener = View.OnClickListener { v ->
@@ -68,12 +72,36 @@ class SettingsFragment : Fragment() {
 
                     }, 100) // Delay of 100 milliseconds
                 }
+                R.id.easyButton -> {
+                    val sharedPref = activity?.getSharedPreferences("difficulty", Context.MODE_PRIVATE)
+                    with(sharedPref!!.edit()) {
+                        putString("difficulty" , "Easy")
+                        apply()
+                    }
+                }
+                R.id.mediumButton -> {
+                    val sharedPref = activity?.getSharedPreferences("difficulty", Context.MODE_PRIVATE)
+                    with(sharedPref!!.edit()) {
+                        putString("difficulty" , "Medium")
+                        apply()
+                    }
+                }
+                R.id.hardButton -> {
+                    val sharedPref = activity?.getSharedPreferences("difficulty", Context.MODE_PRIVATE)
+                    with(sharedPref!!.edit()) {
+                        putString("difficulty" , "Hard")
+                        apply()
+                    }
+                }
             }
         }
 
         // Set the OnClickListener on each RadioButton
         lightModeRadioButton.setOnClickListener(onClickListener)
         darkModeRadioButton.setOnClickListener(onClickListener)
+        easyButton.setOnClickListener(onClickListener)
+        mediumButton.setOnClickListener(onClickListener)
+        hardButton.setOnClickListener(onClickListener)
 
         return view
     }

@@ -61,31 +61,31 @@
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Languages"
+            android:text="Difficulty"
             android:textAlignment="center"
             android:textSize="20sp" />
 
         <RadioButton
-            android:id="@+id/radioButton5"
+            android:id="@+id/easyButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            android:text="English"
+            android:text="Easy"
             android:checked="true"/>
 
         <RadioButton
-            android:id="@+id/radioButton7"
+            android:id="@+id/mediumButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            android:text="Spanish" />
+            android:text="Medium" />
 
         <RadioButton
-            android:id="@+id/radioButton6"
+            android:id="@+id/hardButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            android:text="French" />
+            android:text="Hard" />
     </RadioGroup>
 
     <Space

@@ -12,6 +12,7 @@ import kotlin.random.Random
 
 class SkyGame() {
     var theme: String = ""
+    var difficulty: String = ""
     private var onGameOverListener: OnGameOverListener? = null
     private lateinit var hDisp: TextView
     private var surfaceHeight: Int = 0
@@ -37,8 +38,7 @@ class SkyGame() {
 
 
     // NUMBER OF BIRDS ON SCREEN
-    private val numBirds = 12
-
+    private var numBirds = 12
 
 
     private lateinit var surfer: Surfer
@@ -50,6 +50,12 @@ class SkyGame() {
     private var gameOver = false
 
     fun initialize() {
+
+        numBirds = when (difficulty) {
+            "Easy" -> 16
+            "Medium" -> 12
+            else -> 8
+        }
 
         surfer = Surfer(surfaceWidth, surfaceHeight)
 

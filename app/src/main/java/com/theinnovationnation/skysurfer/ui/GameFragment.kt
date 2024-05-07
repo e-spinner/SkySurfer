@@ -62,6 +62,7 @@ class GameFragment(private var skyGame: SkyGame? = null) : Fragment(), SensorEve
     private lateinit var surfaceView: SkyView
     private lateinit var heightDisplay: TextView
     private var theme: String = ""
+    private var difficulty: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,6 +71,10 @@ class GameFragment(private var skyGame: SkyGame? = null) : Fragment(), SensorEve
         val sharedPref = activity?.getSharedPreferences("theme", Context.MODE_PRIVATE)
         theme = sharedPref?.getString("theme", "lightTheme").toString()
         skyGame?.theme = theme
+
+        val sharedPref2 = activity?.getSharedPreferences("difficulty", Context.MODE_PRIVATE)
+        difficulty = sharedPref2?.getString("difficulty", "Medium").toString()
+        skyGame?.difficulty = difficulty
 
         sensorManager = requireContext().getSystemService(Context.SENSOR_SERVICE) as SensorManager
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)

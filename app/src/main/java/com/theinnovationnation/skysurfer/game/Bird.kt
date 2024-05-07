@@ -14,11 +14,11 @@ fun isLightThemeSelected(themeValue: Long): Boolean {
 // true = Day
 // false = Night
 enum class BirdType(val lightTheme: Long, val darkTheme: Long) {
-    EVIL_BIRD(0xFF402B4C, 0xFFB2A4D4),
-    SHY_BIRD(0x48CCFF, 0x3A3A3E),
-    BOUNCE_BIRD(0xFFffd555, 0xFFFFFFFF),
-    FAST_BIRD(0xFFf92227, 0xFFFFFFFF),
-    SLOW_BIRD(0xFF18206b, 0xFFFFFFFF)
+    EVIL_BIRD(0xFF48AADB, 0xFFA200ff),
+    SHY_BIRD(0x48AADB, 0x686871),
+    BOUNCE_BIRD(0xFFFFD555, 0xFFDAD30B),
+    FAST_BIRD(0xFFf92227, 0xFFE3326D),
+    SLOW_BIRD(0xFFA634D6, 0xCB51FF)
 }
 
 fun randomBird(): BirdType {
